@@ -1,0 +1,1 @@
+{% include 'loop.jinja' %}event['{{ data.task_name }}'] = sqs_client.list_queues({% if data.args[0] is not none %}QueueNamePrefix={{ data.args[0] }}{% endif %})

@@ -1,0 +1,2 @@
+{% include 'loop.jinja' %}queue_url = sqs_client.get_queue_url(QueueName={{ data.args[0] }})
+{% if data.is_loop %}    {% endif %}    event['{{ data.task_name }}'] = sqs_client.purge_queue(QueueUrl=queue_url['QueueUrl'])

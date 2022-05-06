@@ -1,0 +1,9 @@
+def to_cloudevents_schema(event):
+    return {'id':               event['responseElements']['x-amz-request-id']+'.'+event['responseElements']['x-amz-id-2'],
+            'source':           event['eventSource']+'.'+event['awsRegion']+'.'+event['s3']['bucket']['name'],
+            'specversion':      '1.0',
+            'type':             'com.amazonaws.s3.'+event['eventName'],
+            'datacontenttype':  'dict',
+            'time':             event['eventTime'],
+            'subject':          event['s3']['object']['key'],
+            'data':             event}

@@ -1,0 +1,12 @@
+import boto3
+
+{% for module in data.modules %}import .{{ module[:-3] }}
+{% endfor %}
+{% for client in data.clients %}{{ client }}_client = boto3.client('{{ client }}')
+{% endfor %}
+
+def {{ data.handler_name }}(event, context):
+    event = to_cloudevents_schema(event)
+    {% for op in data.operations %}{{ op.to_code() }}
+    {% endfor %}
+{{ data.start_event.to_code() }}

@@ -1,0 +1,8 @@
+{% if data.is_loop %}event['{{ data.task_name }}'] = []
+{% include 'indentation.jinja' %}{% include 'loop.jinja' %}
+{% include 'indentation.jinja' %}    serviceBus_client = ServiceBusClient.from_connection_string({{ data.connection_string }})
+{% include 'indentation.jinja' %}    serviceBus_receiver = serviceBus_client.get_queue_receiver({{ data.args[0] }})
+{% include 'indentation.jinja' %}    event['{{ data.task_name }}'].append(serviceBus_receiver.receive_messages())
+{% else %}serviceBus_client = ServiceBusClient.from_connection_string({{ data.connection_string }})
+{% include 'indentation.jinja' %}serviceBus_receiver = serviceBus_client.get_queue_receiver({{ data.args[0] }})
+{% include 'indentation.jinja' %}event['{{ data.task_name }}'] = serviceBus_receiver.receive_messages(){% endif %}

@@ -1,0 +1,6 @@
+{% if data.is_loop %}event['{{ data.task_name }}'] = []
+{% include 'indentation.jinja' %}{% include 'loop.jinja' %}
+{% include 'indentation.jinja' %}    blob_service_client = BlobServiceClient.from_connection_string({{ data.connection_string }})
+{% include 'indentation.jinja' %}    event['{{ data.task_name }}'].append(blob_service_client.list_containers({{ data.args[0] }}))
+{% else %}blob_service_client = BlobServiceClient.from_connection_string({{ data.connection_string }})
+{% include 'indentation.jinja' %}event['{{ data.task_name }}'] = blob_service_client.list_containers({{ data.args[0] }}){% endif %}

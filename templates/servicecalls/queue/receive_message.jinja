@@ -1,2 +1,6 @@
-{% include 'loop.jinja' %}queue_url = sqs_client.get_queue_url(QueueName={{ data.args[0] }})
-{% if data.is_loop %}    {% endif %}    event['{{ data.task_name }}'] = sqs_client.receive_message(QueueUrl=queue_url['QueueUrl'])
+{% if data.is_loop %}event['{{ data.task_name }}'] = []
+{% include 'indentation.jinja' %}{% include 'loop.jinja' %}
+{% include 'indentation.jinja' %}    queue_client = QueueClient.from_connection_string({{ data.connection_string }}, {{ data.args[0] }})
+{% include 'indentation.jinja' %}    event['{{ data.task_name }}'].append(queue_client.receive_message())
+{% else %}queue_client = QueueClient.from_connection_string({{ data.connection_string }}, {{ data.args[0] }})
+{% include 'indentation.jinja' %}event['{{ data.task_name }}'] = queue_client.receive_message(){% endif %}

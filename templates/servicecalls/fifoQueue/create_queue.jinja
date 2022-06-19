@@ -1,0 +1,6 @@
+{% if data.is_loop %}event['{{ data.task_name }}'] = []
+{% include 'indentation.jinja' %}{% include 'loop.jinja' %}
+{% include 'indentation.jinja' %}    serviceBus_admin_client = ServiceBusAdministrationClient.from_connection_string({{ data.connection_string }})
+{% include 'indentation.jinja' %}    event['{{ data.task_name }}'].append(serviceBus_admin_client.create_queue({{ data.args[0] }}))
+{% else %}serviceBus_admin_client = ServiceBusAdministrationClient.from_connection_string({{ data.connection_string }})
+{% include 'indentation.jinja' %}event['{{ data.task_name }}'] = serviceBus_admin_client.create_queue({{ data.args[0] }}){% endif %}

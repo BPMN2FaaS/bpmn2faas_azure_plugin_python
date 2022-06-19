@@ -1,0 +1,10 @@
+def to_cloudevents_schema(event):
+    return {'id':               event.id,
+            'source':           {{ eventSource }},
+            'specversion':      '1.0',
+            'type':             'com.azure.functions.queueTrigger',
+            'datacontenttype':  'functions.QueueMessage',
+            'time':             event.insertion_time,
+            'message_body':     event.get_json(),
+            'queue_name':       {{ eventSource }},
+            'data':             event}

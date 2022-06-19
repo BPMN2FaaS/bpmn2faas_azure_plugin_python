@@ -1,0 +1,11 @@
+def to_cloudevents_schema(event):
+    return {'id':               event['messageId'],
+            'source':           {{ eventSource }},
+            'specversion':      '1.0',
+            'type':             'com.azure.functions.serviceBusTopicTrigger',
+            'datacontenttype':  'functions.ServiceBusMessage',
+            'time':             event.enqueued_time_utc,
+            'message_body':     event.get_body(),
+            'message_id':       event.message_id,
+            'topic':            {{ eventSource }},
+            'data':             event}

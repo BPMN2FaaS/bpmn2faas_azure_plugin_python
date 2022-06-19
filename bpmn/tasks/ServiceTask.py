@@ -25,6 +25,7 @@ class ServiceTask(Element):
             self.service: Service = Service.PUBSUB
 
         self.service_call: str = element.get(namespace+'serviceCall')
+        self.connection_string: str = ''
         self.args: [str] = [element.get(f'{namespace}arg{i}', default=None) for i in range(1, 6)]
         self.is_loop: bool = True if element.find('./bpmn2:standardLoopCharacteristics', self.ns) is not None else False
         self.loop_condition: str = element.get(namespace+'for') if self.is_loop else None
@@ -36,7 +37,8 @@ class ServiceTask(Element):
         template = env.get_template(f'servicecalls/{self.service.value}/{self.service_call}.jinja')
         data = {'task_name': self.name if self.name is not None else self.id,
                 'args': self.args,
+                'connection_string': self.connection_string,
                 'is_loop': self.is_loop}
         if self.is_loop:
             data['loop_condition'] = self.loop_condition
-        return template.render(data=data)
+        return template.render(data=data, op=self)

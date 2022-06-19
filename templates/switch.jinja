@@ -1,0 +1,6 @@
+{% for case in data.cases %}{% if not loop.first %}{% include 'indentation.jinja' %}el{% endif %}if {{ data.condition }} == {{ case }}:
+{% for op in data.operations[loop.index0] %}{% include 'indentation.jinja' %}{{ op.to_code() }}
+{% endfor %}
+{% endfor %}{% if data.hasDefault %}{% include 'indentation.jinja' %}else:
+{% for op in data.operations[-1] %}{% include 'indentation.jinja' %}{{ op.to_code() }}
+{% endfor %}{% endif %}

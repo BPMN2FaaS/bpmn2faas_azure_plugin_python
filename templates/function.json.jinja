@@ -1,0 +1,14 @@
+{
+  "scriptFile": "{{ data.function_name }}",
+  "bindings": [
+    {
+      "name": "event",
+      "type": "{{ data.trigger_type }}",
+      "direction": "in"{% if data.trigger_type == 'blobTrigger' %},
+      "path": "samples-workitems/{name}"{% elif data.trigger_type == 'timerTrigger' %},
+      "schedule": "{{ data.schedule }}"{% else %},
+      "queueName": "{{ data.queue_name }}"{% endif %}{% if data.trigger_type != 'timerTrigger' %},
+      "connection": "{{ data.connection }}"{% endif %}
+    }
+  ]
+}

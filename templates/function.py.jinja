@@ -1,12 +1,14 @@
-import boto3
+import logging
 
-{% for module in data.modules %}import .{{ module[:-3] }}
+import azure.functions as func
+{% for client in data.clients %}{{ client }}
 {% endfor %}
-{% for client in data.clients %}{{ client }}_client = boto3.client('{{ client }}')
-{% endfor %}
+from shared_code import {% for module in data.modules %}{{ module[:-3] }}{{ ', ' if not loop.last}}{% endfor %}
 
-def {{ data.handler_name }}(event, context):
+
+def main(event: func.{{ data.input_class }}, context: func.Context):
     event = to_cloudevents_schema(event)
     {% for op in data.operations %}{{ op.to_code() }}
     {% endfor %}
+
 {{ data.start_event.to_code() }}

@@ -1,1 +1,4 @@
-{% include 'loop.jinja' %}event['{{ data.task_name }}'] = {{ data.module }}.{{ data.function }}({{ data.args }})
+{% if data.is_loop %}event['{{ data.task_name }}'] = []
+{% include 'indentation.jinja' %}{% include 'loop.jinja' %}
+{% include 'indentation.jinja' %}    event['{{ data.task_name }}'].append({{ data.module }}.{{ data.function }}({{ data.args }}))
+{% else %}event['{{ data.task_name }}'] = {{ data.module }}.{{ data.function }}({{ data.args }}){% endif %}

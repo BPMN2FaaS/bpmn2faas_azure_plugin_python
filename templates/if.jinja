@@ -1,0 +1,5 @@
+if {{ data.condition }}:
+{% for op in data.operations[0] %}{% include 'indentation.jinja' %}{{ op.to_code() }}
+{% endfor %}{% include 'indentation.jinja' %}else:
+{% for op in data.operations[1] %}{% include 'indentation.jinja' %}{{ op.to_code() }}
+{% endfor %}

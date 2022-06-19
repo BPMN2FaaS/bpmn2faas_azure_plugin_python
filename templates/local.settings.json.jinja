@@ -1,0 +1,8 @@
+{
+  "IsEncrypted": false,
+  "Values": {
+    "AzureWebJobsStorage": "",
+    "FUNCTIONS_WORKER_RUNTIME": "python"{% for entry in data %},
+    "{{ entry.event_source }}_{{ entry.service_type }}": "{{ entry.connection_string }}"{% endfor %}
+  }
+}

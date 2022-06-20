@@ -91,7 +91,8 @@ class Plugin:
 
         requirements = set(requirements)
         with open(os.path.join(project_path, 'requirements.txt'), 'w') as requirements_file:
-            requirements_file.write("".join(requirements))
+            requirements_file.write('azure-functions\n\n')
+            requirements_file.write(''.join(requirements))
 
         connection_strings = []
         for function in functions:
